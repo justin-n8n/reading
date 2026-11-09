@@ -72,6 +72,17 @@ canvas.preview { width: 100%; max-width: 360px; border-radius: 10px; border: 1px
 .quotes div { padding: 8px 10px; border: 1px solid var(--line); border-radius: 10px; margin: 6px 0; cursor: pointer; background: var(--card); white-space: pre-wrap; font-family: var(--serif); font-size: .92rem; }
 .quotes div:hover { background: #f6ecdc; }
 
+/* 說明頁（help.js 由 .md 產生） */
+.help h1 { font-size: 1.2rem; }
+.help h2 { color: var(--brand); border-bottom: 1px solid var(--line); padding-bottom: 4px; margin-top: 24px; }
+.help blockquote { margin: 0; padding: 8px 12px; background: var(--card); border-left: 4px solid var(--brand2); color: var(--soft); font-size: .9rem; }
+.help table { border-collapse: collapse; width: 100%; font-size: .88rem; display: block; overflow-x: auto; }
+.help th, .help td { border: 1px solid var(--line); padding: 6px 8px; text-align: left; vertical-align: top; }
+.help th { background: #efe4d2; }
+.help pre { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; overflow-x: auto; font-size: .78rem; line-height: 1.5; }
+.help code { background: #efe4d2; border-radius: 4px; padding: 0 4px; font-size: .88em; }
+.help pre code { background: none; padding: 0; }
+
 /* 底部選單 */
 #nav { position: fixed; left: 0; right: 0; bottom: 0; display: flex; background: var(--card); border-top: 1px solid var(--line); padding-bottom: env(safe-area-inset-bottom); z-index: 10; }
 #nav a { flex: 1; text-align: center; padding: 8px 0 6px; text-decoration: none; color: var(--soft); font-size: .8rem; }

@@ -1,7 +1,7 @@
 /* 離線快取。新增檔案時加進 FILES，並把 VERSION 加一。
    同網域還有 34、43、47：只刪自己開頭（reading-）的快取。 */
-const VERSION = 'reading-v0.1.0';
-const FILES = ['./', 'index.html', 'style.css', 'app.js', 'db.js', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png'];
+const VERSION = 'reading-v0.1.1';
+const FILES = ['./', 'index.html', 'style.css', 'app.js', 'db.js', 'help.js', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(VERSION)

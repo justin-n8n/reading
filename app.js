@@ -1,7 +1,7 @@
 /* 閱讀愈讀樂讀 2.0 — 寫心得 App（04.閱讀愈讀樂讀，規劃 規劃/寫心得App規劃_20261109_v1.md）
    一篇心得的狀態：piece 碎片 → draft 寫作中（或 xh 小輝草稿）→ final 定稿（雲端給 Day 號）→ 小輝說口令時匯入 04。
    快記和完整一篇是同一種資料，只差欄位填了多少。 */
-const APP_VERSION = 'v0.1.0';
+const APP_VERSION = 'v0.1.1';
 const NEED_GS = 'v1';
 const SERIES = '2.0';
 const SEP = '-'.repeat(74);
@@ -398,6 +398,7 @@ async function renderSettings() {
       <div>待同步：${waiting} 篇　｜　書單：${books.length} 本　｜　自在語：${quoteLib.length} 句　｜　2023 心得：${oldNotes.length} 篇</div>
       <div class="hint">App ${APP_VERSION}，需要雲端程式 ${NEED_GS}</div>
     </div>
+    <p class="hint">第一次用、忘了怎麼做：看底部「❓ 說明」。</p>
     <p class="hint">心得存在你雲端硬碟的「04.閱讀愈讀樂讀/06.App資料」，這台只放副本。清除瀏覽器的網站資料會清掉這台的副本和設定，雲端不受影響：重新填網址和密語，按「從雲端還原」。</p>`;
   $('#test').onclick = async () => {
     await kvSet('cfg', { url: $('#url').value.trim(), pass: $('#pass').value });
@@ -410,6 +411,18 @@ async function renderSettings() {
   };
   $('#now').onclick = async () => { toast('同步中…'); await sync(); try { await refreshMeta(true); } catch (_) {} renderSettings(); };
   $('#restore').onclick = async () => { await kvDel('since'); toast('還原中…'); await sync(); try { await refreshMeta(true); } catch (_) {} renderSettings(); };
+}
+
+/* ---------------- ❓ 說明（內容在 help.js，由 05.文件說明 的 .md 產生） ---------------- */
+async function renderHelp() {
+  view.className = '';
+  const which = (await kvGet('helpTab')) || 'use';
+  const has = typeof HELP === 'object';
+  view.innerHTML = `
+    <div class="tabs" style="display:flex"><button data-h="use" class="${which === 'use' ? 'on' : ''}">📖 使用說明</button><button data-h="maint" class="${which === 'maint' ? 'on' : ''}">🛠️ 維護說明</button></div>
+    <div class="help">${has ? HELP[which] : '<p>說明還沒載入，連上網路再打開一次。</p>'}</div>
+    <p class="hint">App ${APP_VERSION}</p>`;
+  view.querySelectorAll('[data-h]').forEach(b => b.onclick = async () => { await kvSet('helpTab', b.dataset.h); renderHelp(); });
 }
 
 /* ---------------- 同步 ---------------- */
@@ -505,6 +518,7 @@ async function route() {
   else if (h.startsWith('#n/')) await renderNote(decodeURIComponent(h.slice(3)));
   else if (h === '#list') await renderList();
   else if (h === '#settings') await renderSettings();
+  else if (h === '#help') await renderHelp();
   else await renderWrite();
   scrollTo(0, 0);
 }
